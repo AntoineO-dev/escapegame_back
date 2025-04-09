@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors');
 const escapegamesRoutes = require('./routes/escapegamesRoutes');
 const reservationsRoutes = require('./routes/reservationsRoutes');
+const clientsRoutes = require('./routes/clientsRoutes');
 require('dotenv').config();
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
@@ -14,6 +15,7 @@ app.use(express.json());
 
 app.use('/api/escapegames', escapegamesRoutes);
 app.use('/api/reservations', reservationsRoutes);
+app.use('/api/clients', clientsRoutes);
 
 
 app.listen (process.env.PORT, () => {

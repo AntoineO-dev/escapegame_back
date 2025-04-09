@@ -620,6 +620,204 @@
                     }
                 }
             }
+        },
+        "comment": "clients",
+        "/clients": {
+            "get": {
+                "summary": "Get all clients",
+                "description": "Returns a list of all clients",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of clients",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id_client": {
+                                        "type": "integer"
+                                    },
+                                    "first_name": {
+                                        "type": "string"
+                                    },
+                                    "last_name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "type": "string"
+                                    },
+                                    "registration_date": {
+                                        "type": "string",
+                                        "format": "date"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/clients/{id}": {
+            "get": {
+                "summary": "Get a specific client",
+                "description": "Returns details of a specific client",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Details of the client",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id_client": {
+                                    "type": "integer"
+                                },
+                                "first_name": {
+                                    "type": "string"
+                                },
+                                "last_name": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "phone": {
+                                    "type": "string"
+                                },
+                                "registration_date": {
+                                    "type": "string",
+                                    "format": "date"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Client not found"
+                    }
+                }
+            }
+        },
+        "/clients/reservation/{id_reservation}": {
+            "get": {
+                "summary": "Get a specific client by reservation ID",
+                "description": "Returns details of a specific client based on reservation ID",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id_reservation",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Details of the client",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id_client": {
+                                    "type": "integer"
+                                },
+                                "first_name": {
+                                    "type": "string"
+                                },
+                                "last_name": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "phone": {
+                                    "type": "string"
+                                },
+                                "registration_date": {
+                                    "type": "string",
+                                    "format": "date"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Client not found for the specified reservation ID"
+                    }
+                }
+            }
+        },
+        "/clients/reservation/month/:month/year/{year}": {
+            "get": {
+                "summary": "Get clients by reservation month and year",
+                "description": "Returns a list of clients filtered by reservation month and year",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "month",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "year",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of clients filtered by reservation month and year",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id_client": {
+                                        "type": "integer"
+                                    },
+                                    "first_name": {
+                                        "type": "string"
+                                    },
+                                    "last_name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "type": "string"
+                                    },
+                                    "registration_date": {
+                                        "type": "string",
+                                        "format": "date"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No clients found for the specified month and year"
+                    }
+                }
+            }
         }
     }
 }
