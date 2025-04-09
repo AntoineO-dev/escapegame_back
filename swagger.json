@@ -21,6 +21,49 @@
         }
     ],
     "paths": {
+        "comment": "Auth",
+        "/auth/login": {
+            "post": {
+                "summary": "Login",
+                "description": "Authenticate a user and return a JWT token",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful login",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "email": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
         "comment": "Escape Games",
         "/escapegames": {
             "get": {
@@ -1073,6 +1116,203 @@
                                     "format": "date-time"
                                 }
                             }
+                        }
+                    },
+                    "404": {
+                        "description": "Payment not found"
+                    }
+                }
+            }
+        },
+        "comment": "payer",
+        "/pay": {
+            "get": {
+                "summary": "Pay for a reservation",
+                "description": "Processes payment for a reservation",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "reservation_id",
+                        "in": "query",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "payment_method",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Payment processed successfully",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "payment_id": {
+                                    "type": "integer"
+                                },
+                                "id_reservation": {
+                                    "type": "integer"
+                                },
+                                "amount": {
+                                    "type": "number",
+                                    "format": "float"
+                                },
+                                "payment_method": {
+                                    "type": "string"
+                                },
+                                "payment_date": {
+                                    "type": "string",
+                                    "format": "date"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request parameters"
+                    },
+                    "404": {
+                        "description": "Reservation not found"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Pay for a reservation",
+                "description": "Processes payment for a reservation",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "reservation_id",
+                        "in": "query",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "payment_method",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Payment processed successfully",
+                        "schema": {
+                            "$ref": "#/definitions/PaymentResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request parameters"
+                    },
+                    "404": {
+                        "description": "Reservation not found"
+                    }
+                }
+            }
+        },
+        "pay/{id}": {
+            "get": {
+                "summary": "Get payment details",
+                "description": "Returns details of a specific payment",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Details of the payment",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id_payment": {
+                                    "type": "integer"
+                                },
+                                "payment_method": {
+                                    "type": "string"
+                                },
+                                "amount": {
+                                    "type": "number",
+                                    "format": "float"
+                                },
+                                "payment_date": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Payment not found"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a payment",
+                "description": "Deletes a specific payment",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Payment deleted successfully"
+                    },
+                    "404": {
+                        "description": "Payment not found"
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Update payment details",
+                "description": "Updates details of a specific payment",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "payment_method",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "amount",
+                        "in": "query",
+                        "required": false,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Payment updated successfully",
+                        "schema": {
+                            "$ref": "#/definitions/PaymentResponse"
                         }
                     },
                     "404": {
