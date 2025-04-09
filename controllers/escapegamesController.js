@@ -1,4 +1,4 @@
-const escapegamesService = require('../services/escapegames_service');
+const escapegamesService = require('../services/escapegamesService');
 
 async function getAllEscapeGames(req, res) {
     try {
@@ -94,45 +94,8 @@ async function getEscapeGameByStatus(req, res) {
     }
 }
 
-async function createEscapeGame(req, res) {
-    const newEscapeGame = req.body;
-    try {
-        const createdEscapeGame = await escapegamesService.createEscapeGame(newEscapeGame);
-        res.status(201).json(createdEscapeGame);
-    } catch (error) {
-        console.error('Error creating escape game:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-}
 
-async function updateEscapeGame(req, res) {
-    const { id } = req.params;
-    const updatedEscapeGame = req.body;
-    try {
-        const escapeGame = await escapegamesService.updateEscapeGame(id, updatedEscapeGame);
-        if (!escapeGame) {
-            return res.status(404).json({ error: 'Escape game not found' });
-        }
-        res.status(200).json(escapeGame);
-    } catch (error) {
-        console.error('Error updating escape game:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-}
 
-async function deleteEscapeGame(req, res) {
-    const { id } = req.params;
-    try {
-        const deleted = await escapegamesService.deleteEscapeGame(id);
-        if (!deleted) {
-            return res.status(404).json({ error: 'Escape game not found' });
-        }
-        res.status(204).send();
-    } catch (error) {
-        console.error('Error deleting escape game:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-}
 
     
 
@@ -145,7 +108,5 @@ module.exports = {
     getEscapeGameByNumberOfPlayers,
     getEscapeGameByPrice,
     getEscapeGameByStatus,
-    createEscapeGame,
-    updateEscapeGame,
-    deleteEscapeGame,
+    
 };

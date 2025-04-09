@@ -84,40 +84,7 @@ function getEscapeGameByStatus(status) {
     });
 }
 
-function createEscapeGame(escapeGame) {
-    return new Promise((resolve, reject) => {
-        const sql = 'INSERT INTO escape_games (escape_type, disponibility, Number_of_players, price, status) VALUES (?, ?, ?, ?, ?)';
-        connection.query(sql, [escapeGame.escape_type, escapeGame.disponibility, escapeGame.Number_of_players, escapeGame.price, escapeGame.status], (err, results) => {
-            if (err) {
-                return reject(err);
-            }
-            resolve(results.insertId);
-        });
-    });
-}
 
-function updateEscapeGame(id, escapeGame) {
-    return new Promise((resolve, reject) => {
-        const sql = 'UPDATE escape_games SET escape_type = ?, disponibility = ?, Number_of_players = ?, price = ?, status = ? WHERE id_escape = ?';
-        connection.query(sql, [escapeGame.escape_type, escapeGame.disponibility, escapeGame.Number_of_players, escapeGame.price, escapeGame.status, id], (err, results) => {
-            if (err) {
-                return reject(err);
-            }
-            resolve(results.affectedRows > 0);
-        });
-    });
-}
-function deleteEscapeGame(id) {
-    return new Promise((resolve, reject) => {
-        const sql = 'DELETE FROM escape_games WHERE id_escape = ?';
-        connection.query(sql, [id], (err, results) => {
-            if (err) {
-                return reject(err);
-            }
-            resolve(results.affectedRows > 0);
-        });
-    });
-}
 
 module.exports = {
     getAllEscapeGames,
@@ -127,8 +94,6 @@ module.exports = {
     getEscapeGameByNumberOfPlayers,
     getEscapeGameByPrice,
     getEscapeGameByStatus,
-    createEscapeGame,
-    updateEscapeGame,
-    deleteEscapeGame
+    
     
 };

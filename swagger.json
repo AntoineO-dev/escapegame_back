@@ -1,0 +1,625 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "escape_game_api",
+        "description": "API documentation for Escape Game API"
+    },
+    "host": "127.0.0.1:3000",
+    "basePath": "/",
+    "securityDefinitions": {
+      "Bearer": {
+         "type": "apiKey",
+         "name": "Authorization",
+         "in": "header",
+         "description": "Entrer le token JWT sous la forme 'Bearer token'"
+      }
+   },
+   "security": [
+      {
+         "Bearer": []
+      }
+   ],
+    "paths": {
+        "comment": "Escape Games",
+        "/escapegames": {
+            "get": {
+                "summary": "Get all escape games",
+                "description": "Returns a list of all escape games",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of escape games",
+                        "schema": {
+                            "type": "array",
+                            "properties": {
+                                "id_escape:": {
+                                    "type": "integer"
+                                },
+                                "escape_type": {
+                                    "type": "string"
+                                },
+                                "price": {
+                                    "type": "number",
+                                    "format": "float"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "disponibility": {
+                                    "type": "number"
+                                },
+                                "Number_of_players": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/escapegames/{id_escape}": {
+            "get": {
+                "summary": "Get a specific escape game",
+                "description": "Returns details of a specific escape game",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id_escape",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Details of the escape game",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id_escape:": {
+                                    "type": "integer"
+                                },
+                                "escape_type": {
+                                    "type": "string"
+                                },
+                                "price": {
+                                    "type": "number",
+                                    "format": "float"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "disponibility": {
+                                    "type": "number"
+                                },
+                                "Number_of_players": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Escape game not found"
+                    }
+                }
+            }
+        },
+        "/escapegames/type/{type}": {
+            "get": {
+                "summary": "Get escape games by type",
+                "description": "Returns a list of escape games filtered by type",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of escape games filtered by type",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id_escape:": {
+                                        "type": "integer"
+                                    },
+                                    "escape_type": {
+                                        "type": "string"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "disponibility": {
+                                        "type": "number"
+                                    },
+                                    "Number_of_players": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No escape games found for the specified type"
+                    }
+                }
+            }
+        },
+        "/escapegames/price/{price}": {
+            "get": {
+                "summary": "Get escape games by price",
+                "description": "Returns a list of escape games filtered by price",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "price",
+                        "in": "path",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of escape games filtered by price",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id_escape:": {
+                                        "type": "integer"
+                                    },
+                                    "escape_type": {
+                                        "type": "string"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "disponibility": {
+                                        "type": "number"
+                                    },
+                                    "Number_of_players": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No escape games found for the specified price"
+                    }
+                }
+            }
+        },
+        "/escapegames/status/{status}": {
+            "get": {
+                "summary": "Get escape games by status",
+                "description": "Returns a list of escape games filtered by status",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of escape games filtered by status",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id_escape:": {
+                                        "type": "integer"
+                                    },
+                                    "escape_type": {
+                                        "type": "string"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "disponibility": {
+                                        "type": "number"
+                                    },
+                                    "Number_of_players": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No escape games found for the specified status"
+                    }
+                }
+            }
+        },
+        "/escapegames/available/{disponibility}": {
+            "get": {
+                "summary": "Get escape games by availability",
+                "description": "Returns a list of escape games filtered by availability",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "disponibility",
+                        "in": "path",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of escape games filtered by availability",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id_escape:": {
+                                        "type": "integer"
+                                    },
+                                    "escape_type": {
+                                        "type": "string"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "disponibility": {
+                                        "type": "number"
+                                    },
+                                    "Number_of_players": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No escape games found for the specified availability"
+                    }
+                }
+            }
+        },
+        "/escapegames/players/{Number_of_players}": {
+            "get": {
+                "summary": "Get escape games by number of players",
+                "description": "Returns a list of escape games filtered by number of players",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Number_of_players",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of escape games filtered by number of players",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id_escape:": {
+                                        "type": "integer"
+                                    },
+                                    "escape_type": {
+                                        "type": "string"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "disponibility": {
+                                        "type": "number"
+                                    },
+                                    "Number_of_players": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No escape games found for the specified number of players"
+                    }
+                }
+            }
+        },
+        "comment": "Reservations",
+        "/reservations": {
+            "get": {
+                "summary": "Get all reservations",
+                "description": "Returns a list of all reservations",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of reservations",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id_reservation": {
+                                        "type": "integer"
+                                    },
+                                    "total_cost": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "reservation_status": {
+                                        "type": "string"
+                                    },
+                                    "id_client": {
+                                        "type": "integer"
+                                    },
+                                    "id_escape": {
+                                        "type": "integer"
+                                    },
+                                    "reservation_date": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/reservations/{id_reservation}": {
+            "get": {
+                "summary": "Get a specific reservation",
+                "description": "Returns details of a specific reservation",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id_reservation",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Details of the reservation",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id_reservation": {
+                                    "type": "integer"
+                                },
+                                "total_cost": {
+                                    "type": "number",
+                                    "format": "float"
+                                },
+                                "reservation_status": {
+                                    "type": "string"
+                                },
+                                "id_client": {
+                                    "type": "integer"
+                                },
+                                "id_escape": {
+                                    "type": "integer"
+                                },
+                                "reservation_date": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Reservation not found"
+                    }
+                }
+            }
+        }, 
+        "/reservations/type/{escape_type}": {
+            "get": {
+                "summary": "Get reservations by escape game type",
+                "description": "Returns a list of reservations filtered by escape game type",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "escape_type",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of reservations filtered by escape game type",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id_reservation": {
+                                        "type": "integer"
+                                    },
+                                    "total_cost": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "reservation_status": {
+                                        "type": "string"
+                                    },
+                                    "id_client": {
+                                        "type": "integer"
+                                    },
+                                    "id_escape": {
+                                        "type": "integer"
+                                    },
+                                    "reservation_date": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No reservations found for the specified escape game type"
+                    }
+                }
+            }
+        },
+        "/reservations/status/{status}": {
+            "get": {
+                "summary": "Get reservations by status",
+                "description": "Returns a list of reservations filtered by status",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of reservations filtered by status",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id_reservation": {
+                                        "type": "integer"
+                                    },
+                                    "total_cost": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "reservation_status": {
+                                        "type": "string"
+                                    },
+                                    "id_client": {
+                                        "type": "integer"
+                                    },
+                                    "id_escape": {
+                                        "type": "integer"
+                                    },
+                                    "reservation_date": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No reservations found for the specified status"
+                    }
+                }
+            }
+        },
+        "/reservations/price/{price}": {
+            "get": {
+                "summary": "Get reservations by price",
+                "description": "Returns a list of reservations filtered by price",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "price",
+                        "in": "path",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of reservations filtered by price",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id_reservation": {
+                                        "type": "integer"
+                                    },
+                                    "total_cost": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "reservation_status": {
+                                        "type": "string"
+                                    },
+                                    "id_client": {
+                                        "type": "integer"
+                                    },
+                                    "id_escape": {
+                                        "type": "integer"
+                                    },
+                                    "reservation_date": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No reservations found for the specified price"
+                    }
+                }
+            }
+        }
+    }
+}

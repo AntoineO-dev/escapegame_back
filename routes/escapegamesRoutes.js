@@ -1,18 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const escapeGamesController = require('../controllers/escapegames_controller');
+const escapeGamesController = require('../controllers/escapegamesController');
 
 // GET /api/escapegames
 router.get('/', escapeGamesController.getAllEscapeGames);
-
-//POST /api/escapegames
-router.post('/', escapeGamesController.createEscapeGame);
-
-//PATCH /api/escapegames/:id
-router.patch('/:id', escapeGamesController.updateEscapeGame);
-
-//DELETE /api/escapegames/:id
-router.delete('/id', escapeGamesController.deleteEscapeGame);
 
 //GET /api/escapegames/type/:type
 router.get('/type/:type', escapeGamesController.getEscapeGameByType);
