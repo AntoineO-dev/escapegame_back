@@ -8,18 +8,18 @@
     "host": "127.0.0.1:3000",
     "basePath": "/",
     "securityDefinitions": {
-      "Bearer": {
-         "type": "apiKey",
-         "name": "Authorization",
-         "in": "header",
-         "description": "Entrer le token JWT sous la forme 'Bearer token'"
-      }
-   },
-   "security": [
-      {
-         "Bearer": []
-      }
-   ],
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "description": "Entrer le token JWT sous la forme 'Bearer token'"
+        }
+    },
+    "security": [
+        {
+            "Bearer": []
+        }
+    ],
     "paths": {
         "comment": "Escape Games",
         "/escapegames": {
@@ -461,7 +461,7 @@
                     }
                 }
             }
-        }, 
+        },
         "/reservations/type/{escape_type}": {
             "get": {
                 "summary": "Get reservations by escape game type",
@@ -761,7 +761,7 @@
                 }
             }
         },
-        "/clients/reservation/month/:month/year/{year}": {
+        "/clients/reservation/month/{month}/year/{year}": {
             "get": {
                 "summary": "Get clients by reservation month and year",
                 "description": "Returns a list of clients filtered by reservation month and year",
@@ -815,6 +815,268 @@
                     },
                     "404": {
                         "description": "No clients found for the specified month and year"
+                    }
+                }
+            }
+        },
+        "comment": "payments",
+        "/payments": {
+            "get": {
+                "summary": "Get all payments",
+                "description": "Returns a list of all payments",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of payments",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id_payment": {
+                                        "type": "integer"
+                                    },
+                                    "payment_method": {
+                                        "type": "string"
+                                    },
+                                    "amount": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "payment_date": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/payments/{payment_method}": {
+            "get": {
+                "summary": "Get payments by method",
+                "description": "Returns a list of payments filtered by payment method",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "payment_method",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of payments filtered by payment method",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id_payment": {
+                                        "type": "integer"
+                                    },
+                                    "payment_method": {
+                                        "type": "string"
+                                    },
+                                    "amount": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "payment_date": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No payments found for the specified method"
+                    }
+                }
+            }
+        },
+        "/payments/above/{amount}": {
+            "get": {
+                "summary": "Get payments above a certain amount",
+                "description": "Returns a list of payments above a specified amount",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "amount",
+                        "in": "path",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of payments above the specified amount",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id_payment": {
+                                        "type": "integer"
+                                    },
+                                    "payment_method": {
+                                        "type": "string"
+                                    },
+                                    "amount": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "payment_date": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No payments found above the specified amount"
+                    }
+                }
+            }
+        },
+        "/payments/below/{amount}": {
+            "get": {
+                "summary": "Get payments below a certain amount",
+                "description": "Returns a list of payments below a specified amount",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "amount",
+                        "in": "path",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of payments below the specified amount",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id_payment": {
+                                        "type": "integer"
+                                    },
+                                    "payment_method": {
+                                        "type": "string"
+                                    },
+                                    "amount": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "payment_date": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No payments found below the specified amount"
+                    }
+                }
+            }
+        },
+        "/payments/total/month/{month}/year/{year}": {
+            "get": {
+                "summary": "Get total payments for a specific month and year",
+                "description": "Returns the total amount of payments for a specified month and year",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "month",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "year",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Total payments for the specified month and year",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "total_payments": {
+                                    "type": "number",
+                                    "format": "float"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No payments found for the specified month and year"
+                    }
+                }
+            }
+        },
+        "/payments/{id}": {
+            "get": {
+                "summary": "Get a specific payment",
+                "description": "Returns details of a specific payment",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Details of the payment",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id_payment": {
+                                    "type": "integer"
+                                },
+                                "payment_method": {
+                                    "type": "string"
+                                },
+                                "amount": {
+                                    "type": "number",
+                                    "format": "float"
+                                },
+                                "payment_date": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Payment not found"
                     }
                 }
             }
