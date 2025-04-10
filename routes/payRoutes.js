@@ -1,12 +1,11 @@
 const express = require('express');
+const servicesController = require('../controllers/payController');
 const auth = require('../controllers/authController');
-const payController = require('../controllers/payController');
 const router = express.Router();
 
-router.get('/',auth.verifyToken, payController.getAllPay);
-router.post('/',auth.verifyToken, payController.createPay);
-router.delete('/:id',auth.verifyToken, payController.deletePay);
-router.patch('/:id',auth.verifyToken, payController.updatePay);
+router.get('/', auth.verifyToken, servicesController.getAllPay);
+router.post('/', auth.verifyToken, servicesController.createPay);
+router.delete('/:id', auth.verifyToken, servicesController.deletePay);
+router.patch('/:id', auth.verifyToken, servicesController.updatePay);
 
 module.exports = router;
-

@@ -1,47 +1,48 @@
-const bcrypt = require('bcrypt');
-const authService = require('../services/authService');
+const bcrypt = require('bcryptjs');
+const AuthService = require('../services/authService');
 const jwt = require('jsonwebtoken');
 
 async function login(req, res) {
-
     try {
-        // Check if the user exists
-        const user = await authService.getUserByEmail(req.body.email);
+        const user = await AuthService.getUserByEmail(req.body.email);
         if (!user) {
-            return res.status(401).json({ message: 'Invalid email or password' });
+            return res.status(401).json({ message: 'Email ou mot de passe incorrect' });
         }
 
-        // Compare the password with the hashed password in the database
-        const isMatch = await bcrypt.compareSync(req.body.password, user.password);
-        if (!isMatch) {
-            return res.status(401).json({ message: 'Invalid email or password' });
+        const passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+        if (!passwordIsValid) {
+            return res.status(401).json({ message: 'Email ou mot de passe incorrect' });
         }
-        // Send the token to the client
+
         res.status(200).json({ token: generateToken(user) });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        console.log(error);
+        res.status(500).json({ message: 'Erreur serveur' });
     }
 }
 
 function generateToken(user) {
-    return jwt.sign({
-        id: user.id_client,
+    return jwt.sign({ 
+        id : user.id_client,
         email: user.email,
-        first_name: user.first_name,
-        last_name: user.last_name,
-        role: user.role,
-    }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        nom: user.last_name,
+        prenom: user.first_name,
+        role : user.role
+     }, "SECRET", {
+        expiresIn: 86400 // 24 hours
+    });
 }
 
 function verifyToken(req, res, next) {
     const token = req.headers['authorization'];
+    
     if (!token) {
-        return res.status(403).json({ message: 'No token provided' });
+        return res.status(403).json({ message: 'Aucun token fourni' });
     }
-    jwt.verify(token.split(' ')[1], process.env.JWT_SECRET, (err, decoded) => {
+
+    jwt.verify(token.split(' ')[1], "SECRET", (err, decoded) => { 
         if (err) {
-            return res.status(401).json({ message: 'Unauthorized' });
+            return res.status(401).json({ message: 'Non autorisé' });
         }
         req.user = decoded;
         next();
@@ -50,5 +51,5 @@ function verifyToken(req, res, next) {
 
 module.exports = {
     login,
-    verifyToken,
+    verifyToken
 };
