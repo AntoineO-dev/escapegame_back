@@ -49,7 +49,27 @@ function verifyToken(req, res, next) {
     });
 }
 
+async function register (req, res) {
+    try {
+        const hashedPassword = bcrypt.hashSync(req.body.password, 8);
+        const newUser = {
+            email: req.body.email,
+            password: hashedPassword,
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            role: req.body.role
+        };
+
+        const response = await AuthService.createUser(newUser);
+        res.status(201).json({ message: 'Utilisateur créé avec succès', userId: response.insertId });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Erreur serveur' });
+    }
+}
+
 module.exports = {
     login,
-    verifyToken
+    verifyToken,
+    register
 };
